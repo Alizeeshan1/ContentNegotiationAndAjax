@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ContentNegotiationAndAjax.Models.TaskEmployee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <button onclick="return getData(@item.Id)">Click</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="color:black" id="data">Here is the Partial View</div>
+
+<script>
+    function getData(id) {
+    $.ajax({
+        
+        url: '/Task/Details/'+id,
+        type: 'GET',
+        contentType: 'json',
+        success: function (result) 
+        {
+            console.log('Data received: ');
+            console.log(result);
+            let content = document.getElementById('data');
+            content.innerHTML = `${result}`;
+        }
+    })
+}
+</script>
