@@ -38,10 +38,9 @@ namespace ContentNegotiationAndAjax.Controllers
         public IActionResult Details(int id)
         {
             var employee = _db.TaskEmpl.Where(x => x.Id == id).FirstOrDefault();
-            var AjaxCall = HttpContext.Request.Headers["Ajax-Call-With"].ToString();
+            var AjaxCall = HttpContext.Request.Headers["X-Requested-With"].ToString();
             if (AjaxCall == "XMLHttpRequest")
             {
-                //return new string[] { "Return to partial View" };
                 return PartialView("_EmployeeDetails", employee);
             }
             return View(employee);
