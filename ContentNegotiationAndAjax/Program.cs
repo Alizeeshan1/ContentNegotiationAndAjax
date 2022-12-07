@@ -21,7 +21,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddMvc()
     .AddXmlSerializerFormatters()
     .AddXmlDataContractSerializerFormatters();
-//.AddFormatterMappings();
+
 builder.Services.AddDbContext<ApplicationDbConetxt>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
@@ -46,3 +46,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+//git changes

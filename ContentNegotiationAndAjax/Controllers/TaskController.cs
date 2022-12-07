@@ -14,7 +14,7 @@ namespace ContentNegotiationAndAjax.Controllers
             _db = db;
         }
         [HttpGet]
-        public IActionResult Index(string? str)
+        public IActionResult Index()
         {
             var employees = _db.TaskEmpl.ToList();
             return View(employees);
@@ -33,11 +33,11 @@ namespace ContentNegotiationAndAjax.Controllers
             return RedirectToAction("Index");
         }
 
-
+        // To check Ajax call 
         [HttpGet]
-        public IActionResult Details(String? id)
+        public IActionResult Details(int id)
         {
-            var employee = _db.TaskEmpl.Where(x => x.Id == Convert.ToInt32(id)).FirstOrDefault();
+            var employee = _db.TaskEmpl.Where(x => x.Id == id).FirstOrDefault();
             var AjaxCall = HttpContext.Request.Headers["Ajax-Call-With"].ToString();
             if (AjaxCall == "XMLHttpRequest")
             {
@@ -45,6 +45,14 @@ namespace ContentNegotiationAndAjax.Controllers
                 return PartialView("_EmployeeDetails", employee);
             }
             return View(employee);
+        }
+
+        //Content Negotiation
+        [HttpGet]
+        public IActionResult Content()
+        {
+            var employees = _db.TaskEmpl.ToList();
+            return Ok(employees);
         }
     }
 }
